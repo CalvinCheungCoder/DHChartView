@@ -100,7 +100,7 @@
 -(void)addLeftBezierPoint{
     
     // 取得起始点
-    CGPoint p1 = [[self.leftPointArr objectAtIndex:0] CGPointValue];
+    CGPoint p1 = [[self.leftPointArr objectAtIndex:1] CGPointValue];
     NSLog(@"%f %f",p1.x,p1.y);
     // 直线的连线
     UIBezierPath *beizer = [UIBezierPath bezierPath];
