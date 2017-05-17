@@ -11,7 +11,7 @@
 #import "UIColor+FlatColors.h"
 #import "UIView+Common.h"
 
-#define btnW 12
+#define btnW 8
 
 @interface DHChartView ()
 {
@@ -32,6 +32,70 @@
 @end
 
 @implementation DHChartView
+
+- (UIColor *)lineColor
+{
+    if (!_lineColor) {
+        _lineColor = [UIColor colorWithRed:96/255.0 green:205/25.0 blue:255/255.0 alpha:1];
+    }
+    return _lineColor;
+}
+
+-(UIColor *)maskTopColor
+{
+    if (!_maskTopColor) {
+        _maskTopColor = [UIColor colorWithRed:96/255.0 green:205/25.0 blue:255/255.0 alpha:0.6];
+    }
+    return _maskTopColor;
+}
+
+-(UIColor *)maskBottomColor
+{
+    if (!_maskBottomColor) {
+        _maskBottomColor = [UIColor colorWithRed:96/255.0 green:205/25.0 blue:255/255.0 alpha:0.1];
+    }
+    return _maskBottomColor;
+}
+
+-(UIColor *)btnNorColor
+{
+    if (!_btnNorColor) {
+        _btnNorColor = [UIColor redColor];
+    }
+    return _btnNorColor;
+}
+
+-(UIColor *)btnSeleColor
+{
+    if (!_btnSeleColor) {
+        _btnSeleColor = [UIColor greenColor];
+    }
+    return _btnSeleColor;
+}
+
+-(UIColor *)tipsTextColor
+{
+    if (!_tipsTextColor) {
+        _tipsTextColor = [UIColor redColor];
+    }
+    return _tipsTextColor;
+}
+
+-(UIColor *)tipsTextBackColor
+{
+    if (!_tipsTextBackColor) {
+        _tipsTextBackColor = [UIColor colorWithRed:254/255.0 green:247/255.0 blue:237/255.0 alpha:1.0];
+    }
+    return _tipsTextBackColor;
+}
+
+-(UIColor *)tipsTextLayerColor
+{
+    if (!_tipsTextLayerColor) {
+        _tipsTextLayerColor = [UIColor redColor];
+    }
+    return _tipsTextLayerColor;
+}
 
 #pragma mark --
 #pragma mark -- 表格背景
@@ -149,14 +213,13 @@
     
     // 渐变图层
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(5, 0, 0, self.scrollBgView1.bounds.size.height-60);
+    gradientLayer.frame = CGRectMake(5, 0, 0, self.scrollBgView1.bounds.size.height-50);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(0, 1);
     gradientLayer.cornerRadius = 5;
     gradientLayer.masksToBounds = YES;
-    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"0xf38b10" andAlpha:0.2].CGColor,(__bridge id)[UIColor colorWithHexString:@"0xf38b10" andAlpha:0.0].CGColor];
+    gradientLayer.colors = @[(__bridge id)self.maskTopColor.CGColor,(__bridge id)self.maskBottomColor.CGColor];
     gradientLayer.locations = @[@(0.5f)];
-    
     CALayer *baseLayer = [CALayer layer];
     [baseLayer addSublayer:gradientLayer];
     [baseLayer setMask:shadeLayer];
@@ -178,7 +241,7 @@
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = beizer.CGPath;
     shapeLayer.fillColor = [UIColor clearColor].CGColor;
-    shapeLayer.strokeColor = [UIColor colorWithHexString:@"0xf38b10" andAlpha:1.0].CGColor;
+    shapeLayer.strokeColor = self.lineColor.CGColor;
     shapeLayer.lineWidth = 2;
     [self.scrollBgView1.layer addSublayer:shapeLayer];
     
@@ -232,8 +295,14 @@
             lastBtn = btn;
             btn.selected = YES;
         }
-        [btn setBackgroundImage:[UIImage imageNamed:@"img_wdzc_zcfx_sye_ellipse"] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"img_wdzc_zcfx_sye_ellipse_hollow"] forState:UIControlStateSelected];
+        if (btn.selected == YES) {
+            btn.backgroundColor = self.btnSeleColor;
+        }else{
+            btn.backgroundColor = self.btnNorColor;
+        }
+//        [btn setBackgroundImage:[UIImage imageNamed:@"img_wdzc_zcfx_sye_ellipse"] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[UIImage imageNamed:@"img_wdzc_zcfx_sye_ellipse_hollow"] forState:UIControlStateSelected];
+        
         [btn addTarget:self action:@selector(TopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [btn setEnlargeEdgeWithTop:15 right:15 bottom:15 left:15];
         
@@ -245,7 +314,7 @@
         /** 创建Label */
         UILabel * detailLabel =[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         [self.scrollBgView1 addSubview: detailLabel];
-        detailLabel.textColor = [UIColor colorWithHexString:@"0xf38b10"];
+        detailLabel.textColor = self.tipsTextColor;
         detailLabel.tag = 200 + i;
         detailLabel.numberOfLines = 0;
         detailLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -254,8 +323,8 @@
         [detailLabel setFrame:CGRectMake((Xmargin)*(i-1)-textSize.width/2+btnW/2, height *(1 - tempHeight)-30, textSize.width, textSize.height)];
         detailLabel.text = str;
         detailLabel.textAlignment = NSTextAlignmentCenter;
-        [detailLabel setBackgroundColor:[UIColor colorWithRed:254/255.0 green:247/255.0 blue:237/255.0 alpha:1.0]];
-        [detailLabel setLayerWidth:0.6f layerColor:[UIColor colorWithHexString:@"0xf38b10"] radius:2.0f];
+        [detailLabel setBackgroundColor:self.tipsTextBackColor];
+        [detailLabel setLayerWidth:0.6f layerColor:self.tipsTextLayerColor radius:2.0f];
         if (i == arr.count - 1) {
             detailLabel.hidden = NO;
         }else{
@@ -289,12 +358,13 @@
     for (UIButton*btn in _leftBtnArr) {
         if (sender.tag == btn.tag) {
             btn.selected = YES;
+            btn.backgroundColor = self.btnSeleColor;
         }else{
             btn.selected = NO;
+            btn.backgroundColor = self.btnNorColor;
         }
     }
     [self showDetailLabel:sender];
-    
 }
 
 -(void)showDetailLabel:(UIButton *)sender{
