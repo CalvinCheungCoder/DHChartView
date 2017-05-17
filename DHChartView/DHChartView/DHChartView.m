@@ -8,7 +8,6 @@
 
 #import "DHChartView.h"
 #import "UIButton+EnlargeTouchArea.h"
-#import "UIColor+FlatColors.h"
 #import "UIView+Common.h"
 
 #define btnW 8
@@ -36,15 +35,23 @@
 - (UIColor *)lineColor
 {
     if (!_lineColor) {
-        _lineColor = [UIColor colorWithRed:96/255.0 green:205/25.0 blue:255/255.0 alpha:1];
+        _lineColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:1];
     }
     return _lineColor;
+}
+
+-(UIColor *)xLabelColor
+{
+    if (!_xLabelColor) {
+        _xLabelColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:1];
+    }
+    return _xLabelColor;
 }
 
 -(UIColor *)maskTopColor
 {
     if (!_maskTopColor) {
-        _maskTopColor = [UIColor colorWithRed:96/255.0 green:205/25.0 blue:255/255.0 alpha:0.6];
+        _maskTopColor = [UIColor colorWithRed:78/255.0 green:151/255.0 blue:232/255.0 alpha:0.4];
     }
     return _maskTopColor;
 }
@@ -52,7 +59,7 @@
 -(UIColor *)maskBottomColor
 {
     if (!_maskBottomColor) {
-        _maskBottomColor = [UIColor colorWithRed:96/255.0 green:205/25.0 blue:255/255.0 alpha:0.1];
+        _maskBottomColor = [UIColor colorWithRed:78/255.0 green:151/255.0 blue:232/255.0 alpha:0.0];
     }
     return _maskBottomColor;
 }
@@ -60,7 +67,7 @@
 -(UIColor *)btnNorColor
 {
     if (!_btnNorColor) {
-        _btnNorColor = [UIColor redColor];
+        _btnNorColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:1];
     }
     return _btnNorColor;
 }
@@ -68,7 +75,7 @@
 -(UIColor *)btnSeleColor
 {
     if (!_btnSeleColor) {
-        _btnSeleColor = [UIColor greenColor];
+        _btnSeleColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:1];
     }
     return _btnSeleColor;
 }
@@ -76,7 +83,7 @@
 -(UIColor *)tipsTextColor
 {
     if (!_tipsTextColor) {
-        _tipsTextColor = [UIColor redColor];
+        _tipsTextColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:1];
     }
     return _tipsTextColor;
 }
@@ -84,7 +91,7 @@
 -(UIColor *)tipsTextBackColor
 {
     if (!_tipsTextBackColor) {
-        _tipsTextBackColor = [UIColor colorWithRed:254/255.0 green:247/255.0 blue:237/255.0 alpha:1.0];
+        _tipsTextBackColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:0.2];
     }
     return _tipsTextBackColor;
 }
@@ -92,7 +99,7 @@
 -(UIColor *)tipsTextLayerColor
 {
     if (!_tipsTextLayerColor) {
-        _tipsTextLayerColor = [UIColor redColor];
+        _tipsTextLayerColor = [UIColor colorWithRed:106/255.0 green:126/255.0 blue:236/255.0 alpha:1];
     }
     return _tipsTextLayerColor;
 }
@@ -110,7 +117,7 @@
 #pragma mark -- 背景网格
 -(UIView *)bgView1{
     if (!_bgView1) {
-        _bgView1 = [[UIView alloc]initWithFrame:CGRectMake(5, 0, self.scrollBgView1.bounds.size.width-10, self.scrollBgView1.bounds.size.height-20)];
+        _bgView1 = [[UIView alloc]initWithFrame:CGRectMake(5, 0, self.scrollBgView1.bounds.size.width-10, self.scrollBgView1.bounds.size.height)];
         _bgView1.layer.masksToBounds = YES;
         _bgView1.layer.borderWidth = 1;
         _bgView1.layer.borderColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1].CGColor;
@@ -213,7 +220,7 @@
     
     // 渐变图层
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(5, 0, 0, self.scrollBgView1.bounds.size.height-50);
+    gradientLayer.frame = CGRectMake(5, 0, 0, self.scrollBgView1.bounds.size.height);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(0, 1);
     gradientLayer.cornerRadius = 5;
@@ -229,7 +236,7 @@
     CABasicAnimation *anmi1 = [CABasicAnimation animation];
     anmi1.keyPath = @"bounds";
     anmi1.duration = 1.6f;
-    anmi1.toValue = [NSValue valueWithCGRect:CGRectMake(15, 0, 2*lastPoint.x, self.scrollBgView1.bounds.size.height-60)];
+    anmi1.toValue = [NSValue valueWithCGRect:CGRectMake(15, 0, 2*lastPoint.x, self.scrollBgView1.bounds.size.height)];
     anmi1.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     anmi1.fillMode = kCAFillModeForwards;
     anmi1.autoreverses = NO;
@@ -300,8 +307,6 @@
         }else{
             btn.backgroundColor = self.btnNorColor;
         }
-//        [btn setBackgroundImage:[UIImage imageNamed:@"img_wdzc_zcfx_sye_ellipse"] forState:UIControlStateNormal];
-//        [btn setBackgroundImage:[UIImage imageNamed:@"img_wdzc_zcfx_sye_ellipse_hollow"] forState:UIControlStateSelected];
         
         [btn addTarget:self action:@selector(TopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [btn setEnlargeEdgeWithTop:15 right:15 bottom:15 left:15];
@@ -324,7 +329,7 @@
         detailLabel.text = str;
         detailLabel.textAlignment = NSTextAlignmentCenter;
         [detailLabel setBackgroundColor:self.tipsTextBackColor];
-        [detailLabel setLayerWidth:0.6f layerColor:self.tipsTextLayerColor radius:2.0f];
+        [detailLabel setLayerWidth:1.0f layerColor:self.tipsTextLayerColor radius:2.0f];
         if (i == arr.count - 1) {
             detailLabel.hidden = NO;
         }else{
@@ -346,7 +351,7 @@
         
         UILabel *leftLabel = [[UILabel alloc]initWithFrame:CGRectMake(+i*Xmargin-Xmargin/2+5, 6*Ymargin, Xmargin, 20)];
         leftLabel.font = [UIFont systemFontOfSize:10.0f];
-        leftLabel.textColor = [UIColor colorWithHexString:@"0x999999"];
+        leftLabel.textColor = self.xLabelColor;
         leftLabel.text = bottomArr[i];
         leftLabel.textAlignment = NSTextAlignmentCenter;
         [UIView addSubview:leftLabel];

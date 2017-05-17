@@ -54,4 +54,9 @@
  */
 @property (nonatomic, strong) UIColor *tipsTextLayerColor;
 
+/**
+ x轴标题颜色
+ */
+@property (nonatomic, strong) UIColor *xLabelColor;
+
 @end
