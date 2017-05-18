@@ -287,7 +287,7 @@
     
     for (int i = 0; i<arr.count; i++) {
         
-        float tempHeight = [arr[i] floatValue] * 0.8 / tempMax ;
+        float tempHeight = [arr[i] floatValue] == 0 ? [arr[i] floatValue] * 0.8 / tempMax : 0;
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((Xmargin)*(i-1), height *(1 - tempHeight) - btnW/2 , btnW, btnW)];
         btn.layer.borderColor = [UIColor clearColor].CGColor;
         btn.layer.borderWidth = 1;
