@@ -285,6 +285,7 @@
         }
     }
     
+    
     for (int i = 0; i<arr.count; i++) {
         
         float tempHeight = [arr[i] floatValue] == 0 ? [arr[i] floatValue] * 0.8 / tempMax : 0;
